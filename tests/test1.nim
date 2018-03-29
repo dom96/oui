@@ -1,5 +1,6 @@
 import oui
 
-let data = parseOui("oui.txt")
+let data = parseOui("tests/oui.txt")
 
-data["00:CD:FE"].company == "Apple, Inc."
+doAssert data["00:CD:FE"].company == "Apple, Inc."
+doAssert data["C0:EE:FB"].company == "OnePlus Tech (Shenzhen) Ltd"
