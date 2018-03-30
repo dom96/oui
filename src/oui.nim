@@ -50,12 +50,23 @@ proc parseOui*(filename: string): OuiData =
   return res.OuiData
 
 proc `[]`*(data: OuiData, key: array[3, uint8]): OuiMeta =
-  let data = Table[Oui, OuiMeta](data)
+  let d = Table[Oui, OuiMeta](data)
 
-  return data[key]
+  return d[key]
 
 proc `[]`*(data: OuiData, key: string): OuiMeta =
   let s = key.split(':')
-  doAssert s.len == 3
+  doAssert s.len == 3, "Got: " & $s
 
   return data[s.toOctets()]
+
+proc contains*(data: OuiData, key: array[3, uint8]): bool =
+  let d = Table[Oui, OuiMeta](data)
+
+  return key in d
+
+proc contains*(data: OuiData, key: string): bool =
+  let s = key.split(':')
+  doAssert s.len == 3, "Got: " & $s
+
+  return s.toOctets() in data
